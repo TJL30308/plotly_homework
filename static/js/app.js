@@ -13,6 +13,8 @@ function unpack(rows, index) {
 var y = Object.values(data.samples);
 var labels = Object.keys(data.otu_ids);
 
+// create placeholder charts for bar and bubble
+
 // Call updatePlotly() when a change takes place to the DOM
 d3.selectAll("#selDataset").on("change", updatePlotly);
   
