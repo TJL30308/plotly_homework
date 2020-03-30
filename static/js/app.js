@@ -24,10 +24,14 @@ function updatePlotly() {
     // Assign the value of the dropdown menu option to a variable
     var dataset = dropdownMenu.property("value");
 
+    var id = dataset.id;
+    var samples = dataset.samples;
+    var labels = dataset.otu_lables;
+
     // create horizontal bar chart
     var trace1 = {
-        x: ,
-        y: ,
+        x: labels,
+        y: samples,
         type: 'bar',
         text: ''
         };
@@ -38,8 +42,9 @@ function updatePlotly() {
     Plotly.restyle("bar", "labels", [labels]);
     Plotly.restyle("bar", "y", [y]);
 
+    // create bubble chart
     var trace1 = {
-        x: ,
+        x: id,
         y: ,
         mode: 'markers'
         };
