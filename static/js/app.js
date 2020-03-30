@@ -3,7 +3,6 @@ d3.json("../samples.json").then(function(data) {
     console.log(data);
   });
 
-// create horizontal bar chart
 
 function unpack(rows, index) {
     return rows.map(function(row) {
@@ -14,32 +13,48 @@ function unpack(rows, index) {
 var y = Object.values(data.samples);
 var labels = Object.keys(data.otu_ids);
 
-function init() {
-    data = [{
-        x: [1, 2, 3, 4, 5],
-        y: [1, 2, 4, 8, 16], 
-        type: 'bar' 
-    }];
-  
-    Plotly.newPlot("bar", data);
-    }
-  
 // Call updatePlotly() when a change takes place to the DOM
 d3.selectAll("#selDataset").on("change", updatePlotly);
   
 // This function is called when a dropdown menu item is selected
 function updatePlotly() {
+
     // Use D3 to select the dropdown menu
     var dropdownMenu = d3.select("#selDataset");
     // Assign the value of the dropdown menu option to a variable
     var dataset = dropdownMenu.property("value");
 
-    var x = 
-    var y = 
+    // create horizontal bar chart
+    var trace1 = {
+        x: ,
+        y: ,
+        type: 'bar',
+        text: ''
+        };
+
+    var data = [trace1]
   
     // Note the extra brackets around 'x' and 'y'
     Plotly.restyle("bar", "labels", [labels]);
     Plotly.restyle("bar", "y", [y]);
+
+    var trace1 = {
+        x: ,
+        y: ,
+        mode: 'markers'
+        };
+    
+    var data = [trace1]
+
+    var layout = {
+        title: 'Marker Size and Color',
+        showlegend: false,
+        height: 600,
+        width: 600
+      };
+      
+    Plotly.restyle('bubble', data, layout);
+
   }
   
   init();
