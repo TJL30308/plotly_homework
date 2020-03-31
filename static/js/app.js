@@ -1,67 +1,59 @@
-// load data from json and console log to verify
-d3.json("../samples.json").then(function(data) {
-    console.log(data);
-  });
+// get data from json and confirm
+d3.json("../samples.json").then(data => 
+    console.log(data));
 
+// create function for plotting
+function plot(id) {
 
-function unpack(rows, index) {
-    return rows.map(function(row) {
-      return row[index];
-    });
-  }
+    // get data from json
+    d3.json("../samples.json").then(data => 
+        console.log(data));
+    
+    var samples = data.samples.filter(sample => sample.id === id)[0];
 
-var y = Object.values(data.samples);
-var labels = Object.keys(data.otu_ids);
+    console.log(samples);
 
-// create placeholder charts for bar and bubble
+    var sampleValues = samples.sample_values.slice(0, 10).reverse();
 
-// Call updatePlotly() when a change takes place to the DOM
-d3.selectAll("#selDataset").on("change", updatePlotly);
-  
-// This function is called when a dropdown menu item is selected
-function updatePlotly() {
+    console.log(sampleValues);
 
-    // Use D3 to select the dropdown menu
-    var dropdownMenu = d3.select("#selDataset");
-    // Assign the value of the dropdown menu option to a variable
-    var dataset = dropdownMenu.property("value");
+    var otuTopIds = samples.otu_ids.slice(0 ,10).reverse();
 
-    var id = dataset.id;
-    var samples = dataset.samples;
-    var labels = dataset.otu_lables;
+    console.log(otuTopIds);
 
-    // create horizontal bar chart
+    otuId = otuTopIds.map(d => "OTU " + d);
+    
+    console.log(otuId);
+
+    var labels = samples.otu_lables.slice(0 ,10);
+
     var trace1 = {
-        x: labels,
-        y: samples,
-        type: 'bar',
-        text: ''
-        };
-
-    var data = [trace1]
-  
-    // Note the extra brackets around 'x' and 'y'
-    Plotly.restyle("bar", "labels", [labels]);
-    Plotly.restyle("bar", "y", [y]);
-
-    // create bubble chart
-    var trace1 = {
-        x: id,
-        y: ,
-        mode: 'markers'
+        x: sampleValues,
+        y: otuId,
+        text: labels,
+        marker: {
+            color: 'rgb()'},
+        type: "bar",
+        orientation: "h"
         };
     
-    var data = [trace1]
+    var data = [trace1];
 
-    var layout = {
-        title: 'Marker Size and Color',
-        showlegend: false,
-        height: 600,
-        width: 600
-      };
-      
-    Plotly.restyle('bubble', data, layout);
+    Plotly.newPlot("bar", data, layout);
+}
 
-  }
-  
-  init();
+function optionChanged(id) {
+    plot(id);
+}
+
+function init() {
+    var dropdown = d3.select("#selDataset");
+
+    d3.json("../samples.json").then(data => {
+        data.names.forEach(function(name) {
+            dropdown.append("option").text(name).property("value");
+        });
+
+        plot(data.names[0]);
+    });
+}
