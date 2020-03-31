@@ -6,7 +6,7 @@
 function plot(id) {
 
     // get data from json
-    d3.json("../data/samples.json").then(data => {
+    d3.json("../../data/samples.json").then(data => {
     
     // check data 
     console.log(data);
@@ -98,7 +98,7 @@ function plot(id) {
 
 // functin to update metaData table
 function metaData(id) {
-    d3.json("../data/samples.json").then(data => {
+    d3.json("../../data/samples.json").then(data => {
 
         // get metadata needed for info table
         var metaData = data.metadata;
@@ -132,7 +132,7 @@ function optionChanged(id) {
 function init() {
     var dropdown = d3.select("#selDataset");
 
-    d3.json("../data/samples.json").then(data => {
+    d3.json("../../data/samples.json").then(data => {
         data.names.forEach(function(name) {
             dropdown.append("option").text(name).property("value");
         });
